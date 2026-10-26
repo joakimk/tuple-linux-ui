@@ -1,0 +1,242 @@
+[
+  {
+    "id": 141069,
+    "email": "brian.kernighan@example.com",
+    "full_name": "Brian Kernighan",
+    "short_name": "Brian",
+    "kind": "teammate",
+    "favorited": true,
+    "recent": true,
+    "status": "online"
+  },
+  {
+    "id": 160754,
+    "email": "tim.berners-lee@example.com",
+    "full_name": "Tim Berners-Lee",
+    "short_name": "Tim",
+    "kind": "teammate",
+    "favorited": true,
+    "recent": true,
+    "status": "online"
+  },
+  {
+    "id": 844,
+    "email": "donald.knuth@example.com",
+    "full_name": "Donald Knuth",
+    "short_name": "Donald",
+    "kind": "teammate",
+    "favorited": true,
+    "recent": false,
+    "status": "online"
+  },
+  {
+    "id": 14895,
+    "email": "anita.borg@example.com",
+    "full_name": "Anita Borg",
+    "short_name": "Anita",
+    "kind": "teammate",
+    "favorited": true,
+    "recent": false,
+    "status": "online"
+  },
+  {
+    "id": 1956,
+    "email": "john.mccarthy@example.com",
+    "full_name": "John McCarthy",
+    "short_name": "John",
+    "kind": "teammate",
+    "favorited": true,
+    "recent": true,
+    "status": "online"
+  },
+  {
+    "id": 1958,
+    "email": "adele.goldberg@example.com",
+    "full_name": "Adele Goldberg",
+    "short_name": "Adele",
+    "kind": "teammate",
+    "favorited": true,
+    "recent": false,
+    "status": "online"
+  },
+  {
+    "id": 872,
+    "email": "vint.cerf@example.com",
+    "full_name": "Vint Cerf",
+    "short_name": "Vint",
+    "kind": "teammate",
+    "favorited": true,
+    "recent": false,
+    "status": "offline"
+  },
+  {
+    "id": 114075,
+    "email": "barbara.liskov@example.com",
+    "full_name": "Barbara Liskov",
+    "short_name": "Barbara",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 33033,
+    "email": "ada.lovelace@example.com",
+    "full_name": "Ada Lovelace",
+    "short_name": "Ada",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 127018,
+    "email": "dennis.ritchie@example.com",
+    "full_name": "Dennis Ritchie",
+    "short_name": "Dennis",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 64338,
+    "email": "guido.van.rossum@example.com",
+    "full_name": "Guido van Rossum",
+    "short_name": "Guido",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 43397,
+    "email": "alan.turing@example.com",
+    "full_name": "Alan Turing",
+    "short_name": "Alan",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 118760,
+    "email": "niklaus.wirth@example.com",
+    "full_name": "Niklaus Wirth",
+    "short_name": "Niklaus",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 167000,
+    "email": "leslie.lamport@example.com",
+    "full_name": "Leslie Lamport",
+    "short_name": "Leslie",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 164585,
+    "email": "bjarne.stroustrup@example.com",
+    "full_name": "Bjarne Stroustrup",
+    "short_name": "Bjarne",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": true,
+    "status": "unknown"
+  },
+  {
+    "id": 79789,
+    "email": "jose.valim@example.com",
+    "full_name": "José Valim",
+    "short_name": "José",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 68926,
+    "email": "ken.thompson@example.com",
+    "full_name": "Ken Thompson",
+    "short_name": "Ken",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 140857,
+    "email": "edsger.dijkstra@example.com",
+    "full_name": "Edsger Dijkstra",
+    "short_name": "Edsger",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": true,
+    "status": "unknown"
+  },
+  {
+    "id": 124590,
+    "email": "grace.hopper@example.com",
+    "full_name": "Grace Hopper",
+    "short_name": "Grace",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 136734,
+    "email": "linus.torvalds@example.com",
+    "full_name": "Linus Torvalds",
+    "short_name": "Linus",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 146515,
+    "email": "margaret.hamilton@example.com",
+    "full_name": "Margaret Hamilton",
+    "short_name": "Margaret",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 118549,
+    "email": "yukihiro.matsumoto@example.com",
+    "full_name": "Yukihiro Matsumoto",
+    "short_name": "Yukihiro",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 112384,
+    "email": "radia.perlman@example.com",
+    "full_name": "Radia Perlman",
+    "short_name": "Radia",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  },
+  {
+    "id": 68630,
+    "email": "frances.allen@example.com",
+    "full_name": "Frances Allen",
+    "short_name": "Frances",
+    "kind": "teammate",
+    "favorited": false,
+    "recent": false,
+    "status": "unknown"
+  }
+]

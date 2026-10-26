@@ -1,0 +1,658 @@
+{
+  "app_version": "v2026_10_23.0",
+  "contacts": [
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/2b9150605ac374d671a306b5fcee60a0?d=blank&s=200",
+      "email": "ada.lovelace@example.com",
+      "favorited": false,
+      "full_name": "Ada Lovelace",
+      "id": 33033,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Ada",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/c404ee70be8231ce56d64b5497d91b14?d=blank&s=200",
+      "email": "grace.hopper@example.com",
+      "favorited": false,
+      "full_name": "Grace Hopper",
+      "id": 124590,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Grace",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/64744ff99587f65666c524e73c5c784e?d=blank&s=200",
+      "email": "linus.torvalds@example.com",
+      "favorited": false,
+      "full_name": "Linus Torvalds",
+      "id": 136734,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Linus",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/dfb5a6ccd3860e5bb45128a7a8f437c2?d=blank&s=200",
+      "email": "margaret.hamilton@example.com",
+      "favorited": false,
+      "full_name": "Margaret Hamilton",
+      "id": 146515,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Margaret",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/3418d29d299a6c4f91f0d6bd82cdfffa?d=blank&s=200",
+      "email": "alan.turing@example.com",
+      "favorited": false,
+      "full_name": "Alan Turing",
+      "id": 43397,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Alan",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/981142a1b6d6d45df6522bbc0051df2f?d=blank&s=200",
+      "email": "barbara.liskov@example.com",
+      "favorited": false,
+      "full_name": "Barbara Liskov",
+      "id": 114075,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Barbara",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/3bd984f04c5691d78e4d07cba79ae1e0?d=blank&s=200",
+      "email": "dennis.ritchie@example.com",
+      "favorited": false,
+      "full_name": "Dennis Ritchie",
+      "id": 127018,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Dennis",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/927b5f9b707cfa7d79d35da5cb0b1889?d=blank&s=200",
+      "email": "ken.thompson@example.com",
+      "favorited": false,
+      "full_name": "Ken Thompson",
+      "id": 68926,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Ken",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/1963dc25d0c9e1ffff2260bb235995b8?d=blank&s=200",
+      "email": "radia.perlman@example.com",
+      "favorited": false,
+      "full_name": "Radia Perlman",
+      "id": 112384,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Radia",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/7ed26e62857cd1aebc7ce12e1fb1c0be?d=blank&s=200",
+      "email": "guido.van.rossum@example.com",
+      "favorited": false,
+      "full_name": "Guido van Rossum",
+      "id": 64338,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Guido",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/6dc5af5746b8a39bbd23b28a206a6d59?d=blank&s=200",
+      "email": "yukihiro.matsumoto@example.com",
+      "favorited": false,
+      "full_name": "Yukihiro Matsumoto",
+      "id": 118549,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Yukihiro",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/c95147382bfb434834503c17274c214a?d=blank&s=200",
+      "email": "jose.valim@example.com",
+      "favorited": false,
+      "full_name": "José Valim",
+      "id": 79789,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "José",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/e44b8ab3e050d9e8496d9f2ef25bf65e?d=blank&s=200",
+      "email": "frances.allen@example.com",
+      "favorited": false,
+      "full_name": "Frances Allen",
+      "id": 68630,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Frances",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/4309c62b4d983437a57ec4c03573d5cf?d=blank&s=200",
+      "email": "donald.knuth@example.com",
+      "favorited": true,
+      "full_name": "Donald Knuth",
+      "id": 844,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Donald",
+      "status": "online"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/74a0f440a1362983e370f93a89babcad?d=blank&s=200",
+      "email": "edsger.dijkstra@example.com",
+      "favorited": false,
+      "full_name": "Edsger Dijkstra",
+      "id": 140857,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": true,
+      "short_name": "Edsger",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/5a9e6954d85fc10a55adbd5d20ab3b30?d=blank&s=200",
+      "email": "leslie.lamport@example.com",
+      "favorited": false,
+      "full_name": "Leslie Lamport",
+      "id": 167000,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Leslie",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/ec1a689d0f929dbd11a4f995863b9bce?d=blank&s=200",
+      "email": "niklaus.wirth@example.com",
+      "favorited": false,
+      "full_name": "Niklaus Wirth",
+      "id": 118760,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Niklaus",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/02738a967230b914b44495a66b5bd381?d=blank&s=200",
+      "email": "bjarne.stroustrup@example.com",
+      "favorited": false,
+      "full_name": "Bjarne Stroustrup",
+      "id": 164585,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": true,
+      "short_name": "Bjarne",
+      "status": "unknown"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/3a2fd4301b70184a91e39e454b21c7d6?d=blank&s=200",
+      "email": "brian.kernighan@example.com",
+      "favorited": true,
+      "full_name": "Brian Kernighan",
+      "id": 141069,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": true,
+      "short_name": "Brian",
+      "status": "online"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/e10438d3993724a25346701ab713b265?d=blank&s=200",
+      "email": "anita.borg@example.com",
+      "favorited": true,
+      "full_name": "Anita Borg",
+      "id": 14895,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Anita",
+      "status": "online"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/736a9821b9e9e714b2e112e3c0daafd9?d=blank&s=200",
+      "email": "john.mccarthy@example.com",
+      "favorited": true,
+      "full_name": "John McCarthy",
+      "id": 1956,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": true,
+      "short_name": "John",
+      "status": "online"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/15dcb73b8c5a17cba55000848f80a93b?d=blank&s=200",
+      "email": "adele.goldberg@example.com",
+      "favorited": true,
+      "full_name": "Adele Goldberg",
+      "id": 1958,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Adele",
+      "status": "online"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/077fc2012f66ac5e3aeb3d11fb19b8c7?d=blank&s=200",
+      "email": "tim.berners-lee@example.com",
+      "favorited": true,
+      "full_name": "Tim Berners-Lee",
+      "id": 160754,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": true,
+      "short_name": "Tim",
+      "status": "online"
+    },
+    {
+      "avatar_url": "https://www.gravatar.com/avatar/912c842479db2913f48d7015ebaf3f4b?d=blank&s=200",
+      "email": "vint.cerf@example.com",
+      "favorited": true,
+      "full_name": "Vint Cerf",
+      "id": 872,
+      "is_agent": false,
+      "kind": "teammate",
+      "recent": false,
+      "short_name": "Vint",
+      "status": "offline"
+    }
+  ],
+  "current_user": {
+    "analytics_super_properties": {
+      "contact_list_size": 9,
+      "invited_by_user_id": null,
+      "max_seat_count": 26,
+      "paid_seat_count": 25,
+      "streak_length_in_weeks": 2.0,
+      "team_id": "42",
+      "team_plan_status": "active",
+      "time_of_first_call": "2024-02-21T11:56:53Z",
+      "total_call_count": 527,
+      "user_id": "107500"
+    },
+    "avatar_url": "",
+    "capture_visible": true,
+    "current_session_id": "dcc8b9f6-413b-e83e-4582-c773d1be5e02",
+    "email": "jo.example@example.com",
+    "feature_flags": [
+      "klipy_gifs",
+      "rooms",
+      "audio_max_jitter",
+      "call_stats",
+      null,
+      "audio_red",
+      "triggers",
+      "app_veil",
+      "call_history",
+      "capture_enable",
+      "webcams_playout_delay",
+      "h265_mac",
+      "no_av_sync"
+    ],
+    "full_name": "Jo Example",
+    "guest_invite_url": "https://tuple.app/onboarding/team_invitations/REDACTED",
+    "id": 107500,
+    "is_guest": false,
+    "is_paid": true,
+    "short_name": "Jo",
+    "team": {
+      "allow_auto_open_url": true,
+      "external_contacts_permitted": true,
+      "id": 42,
+      "name": "Acme",
+      "owner": {
+        "avatar_url": "https://www.gravatar.com/avatar/912c842479db2913f48d7015ebaf3f4b?d=blank&s=200",
+        "email": "vint.cerf@example.com",
+        "full_name": "Vint Cerf",
+        "id": 872,
+        "short_name": "Vint"
+      },
+      "room_limit": 40,
+      "sfu_usage_permitted": true,
+      "subscription_status": "active",
+      "trial_ends_at": "2025-01-09T15:08:17Z"
+    },
+    "team_invite_url": "https://tuple.app/onboarding/team_invitations/REDACTED"
+  },
+  "invites": [],
+  "is_internet_connected": true,
+  "missed_calls": [],
+  "platform": "linux",
+  "rooms": {
+    "personal": [
+      {
+        "auto_join_behavior": "contacts",
+        "created_at": "2024-02-21T12:26:44Z",
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/r24ab2",
+        "id": "c38424ab-1324-e048-fe4c-0b4d9add30a0",
+        "members": [],
+        "slug": "r24ab2",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      }
+    ],
+    "team": [
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2025-01-24T13:00:19Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/4309c62b4d983437a57ec4c03573d5cf?d=blank&s=200",
+          "email": "donald.knuth@example.com",
+          "full_name": "Donald Knuth",
+          "id": 844,
+          "short_name": "Donald"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/rf0953",
+        "id": "54f1e77d-0022-9961-9862-6140cc66884c",
+        "last_edited_by": {
+          "avatar_url": "https://www.gravatar.com/avatar/e10438d3993724a25346701ab713b265?d=blank&s=200",
+          "email": "anita.borg@example.com",
+          "full_name": "Anita Borg",
+          "id": 14895,
+          "short_name": "Anita"
+        },
+        "members": [],
+        "name": "Backend",
+        "slug": "rf0953",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2023-12-14T09:37:10Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/1773af40ab8b0bd3a3c4e634c4586d16?d=blank&s=200",
+          "email": "katherine.johnson@example.com",
+          "full_name": "Katherine Johnson",
+          "id": 83981,
+          "short_name": "Katherine"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/r66194",
+        "id": "53a7dcd6-cdaa-1831-9052-6608a03c7064",
+        "last_edited_by": {
+          "avatar_url": "https://www.gravatar.com/avatar/4309c62b4d983437a57ec4c03573d5cf?d=blank&s=200",
+          "email": "donald.knuth@example.com",
+          "full_name": "Donald Knuth",
+          "id": 844,
+          "short_name": "Donald"
+        },
+        "members": [],
+        "name": "Frontend fika",
+        "slug": "r66194",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2024-09-16T08:05:31Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/39952d8d4ad71a43d484a594742ef86b?d=blank&s=200",
+          "email": "sophie.wilson@example.com",
+          "full_name": "Sophie Wilson",
+          "id": 111085,
+          "short_name": "Sophie"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/r6f79e",
+        "id": "2af97029-e8ff-f5ee-d0b3-cd6b6a871b10",
+        "members": [],
+        "name": "Data",
+        "slug": "r6f79e",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2024-02-28T08:52:59Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/736a9821b9e9e714b2e112e3c0daafd9?d=blank&s=200",
+          "email": "john.mccarthy@example.com",
+          "full_name": "John McCarthy",
+          "id": 1956,
+          "short_name": "John"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/r5c2c0",
+        "id": "b0434368-d5ba-1a16-3fe7-2abb7942fc30",
+        "last_edited_by": {
+          "avatar_url": "https://www.gravatar.com/avatar/736a9821b9e9e714b2e112e3c0daafd9?d=blank&s=200",
+          "email": "john.mccarthy@example.com",
+          "full_name": "John McCarthy",
+          "id": 1956,
+          "short_name": "John"
+        },
+        "members": [],
+        "name": "DevOps",
+        "slug": "r5c2c0",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2024-06-28T14:09:07Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/4309c62b4d983437a57ec4c03573d5cf?d=blank&s=200",
+          "email": "donald.knuth@example.com",
+          "full_name": "Donald Knuth",
+          "id": 844,
+          "short_name": "Donald"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/rd7b9b",
+        "id": "d41a9e5a-495f-e0d4-1101-63670032a045",
+        "members": [],
+        "name": "Incidents",
+        "slug": "rd7b9b",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2023-11-02T15:14:11Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/e44b8ab3e050d9e8496d9f2ef25bf65e?d=blank&s=200",
+          "email": "frances.allen@example.com",
+          "full_name": "Frances Allen",
+          "id": 68630,
+          "short_name": "Frances"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/rc27eb",
+        "id": "ae0d738f-c1b1-44b0-159f-768de711e648",
+        "last_edited_by": {
+          "avatar_url": "https://www.gravatar.com/avatar/927b5f9b707cfa7d79d35da5cb0b1889?d=blank&s=200",
+          "email": "ken.thompson@example.com",
+          "full_name": "Ken Thompson",
+          "id": 68926,
+          "short_name": "Ken"
+        },
+        "members": [],
+        "name": "Logistics",
+        "slug": "rc27eb",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2023-12-11T09:47:24Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/e44b8ab3e050d9e8496d9f2ef25bf65e?d=blank&s=200",
+          "email": "frances.allen@example.com",
+          "full_name": "Frances Allen",
+          "id": 68630,
+          "short_name": "Frances"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/r65677",
+        "id": "1929025e-768c-a395-4b9b-11c8ae0a6f76",
+        "last_edited_by": {
+          "avatar_url": "https://www.gravatar.com/avatar/e44b8ab3e050d9e8496d9f2ef25bf65e?d=blank&s=200",
+          "email": "frances.allen@example.com",
+          "full_name": "Frances Allen",
+          "id": 68630,
+          "short_name": "Frances"
+        },
+        "members": [],
+        "name": "Maintenance",
+        "slug": "r65677",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2025-10-29T09:07:16Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/e10438d3993724a25346701ab713b265?d=blank&s=200",
+          "email": "anita.borg@example.com",
+          "full_name": "Anita Borg",
+          "id": 14895,
+          "short_name": "Anita"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/r5ef4e",
+        "id": "14969290-b90f-44b6-b82e-0d51059adeb9",
+        "members": [],
+        "name": "Marketplace",
+        "slug": "r5ef4e",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2025-04-11T09:18:33Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/3418d29d299a6c4f91f0d6bd82cdfffa?d=blank&s=200",
+          "email": "alan.turing@example.com",
+          "full_name": "Alan Turing",
+          "id": 43397,
+          "short_name": "Alan"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/r423f8",
+        "id": "46757784-d0ec-e259-29fa-3485434b8902",
+        "members": [],
+        "name": "Support",
+        "slug": "r423f8",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      },
+      {
+        "auto_join_behavior": "teammates",
+        "created_at": "2025-01-21T14:04:46Z",
+        "creator": {
+          "avatar_url": "https://www.gravatar.com/avatar/927b5f9b707cfa7d79d35da5cb0b1889?d=blank&s=200",
+          "email": "ken.thompson@example.com",
+          "full_name": "Ken Thompson",
+          "id": 68926,
+          "short_name": "Ken"
+        },
+        "ephemeral": false,
+        "favorited": false,
+        "http_value": "https://tuple.app/c/r95ede",
+        "id": "4364a27d-a44e-9683-4822-0dab43897646",
+        "members": [],
+        "name": "Random",
+        "slug": "r95ede",
+        "subscribed_to_presence_updates": true,
+        "subscription_kinds": [],
+        "team": {
+          "id": 42,
+          "name": "Acme"
+        }
+      }
+    ]
+  },
+  "sessions": [],
+  "sign_in": "signed_in",
+  "websocket_state": "connected",
+  "whisper_model_manager": {
+    "has_active_download": false,
+    "has_model": false
+  }
+}

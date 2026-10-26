@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tuple-ui"
+version = "2.0.0"
+description = "Linux desktop client for Tuple pair programming, built on the unified tuple CLI"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = ["PyQt6>=6.6"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.gui-scripts]
+tuple-ui = "tuple_ui.app:main"
+
+[tool.setuptools.packages.find]
+include = ["tuple_ui*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

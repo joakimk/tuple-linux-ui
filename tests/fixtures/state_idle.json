@@ -1,0 +1,47 @@
+{
+  "in_call": false,
+  "call": null,
+  "user": {
+    "id": 107500,
+    "email": "jo.example@example.com",
+    "short_name": "Jo",
+    "full_name": "Jo Example"
+  },
+  "contacts": {
+    "total": 24,
+    "online": 6,
+    "busy": 0,
+    "favorites": {
+      "total": 7,
+      "online": 6,
+      "online_names": [
+        "Donald Knuth",
+        "Brian Kernighan",
+        "Anita Borg",
+        "John McCarthy",
+        "Adele Goldberg",
+        "Tim Berners-Lee"
+      ]
+    }
+  },
+  "rooms": {
+    "personal": 1,
+    "team": 10,
+    "occupied": 0
+  },
+  "invites": 0,
+  "connection": {
+    "websocket_state": "connected",
+    "is_internet_connected": true
+  },
+  "platform": "linux",
+  "app_version": "v2026_10_23.0",
+  "available_update_version": null,
+  "see": {
+    "call": "tuple call show",
+    "contacts": "tuple contacts list",
+    "favorites_online": "tuple contacts list --favorited --status online",
+    "rooms": "tuple rooms list",
+    "user": "tuple whoami"
+  }
+}
