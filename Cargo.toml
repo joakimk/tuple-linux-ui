@@ -1,0 +1,31 @@
+[package]
+name = "tuple-ui"
+version = "2.0.0"
+edition = "2021"
+description = "Linux desktop client for Tuple pair programming, built on the unified tuple CLI"
+license = "MIT"
+
+[[bin]]
+name = "tuple-ui"
+path = "src/main.rs"
+
+[dependencies]
+iced = { version = "0.14", features = ["tokio", "image", "canvas", "advanced"] }
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+directories = "6"
+futures = "0.3"
+ksni = "0.3"
+notify-rust = "4"
+ureq = "3"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 2

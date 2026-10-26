@@ -82,8 +82,12 @@ elif words[:1] == ["settings"]:
     print("capture | auto | Screen capture mechanism (auto|x11|portal)")
     print("guest-mode | annotation | Current mode in screen window (annotation|control)")
     print("transcription-model |  | File path to whisper ggml model")
-elif words[:2] == ["capture", "list"]:
-    emit({"error": "transcription store unavailable", "error_code": 503})
-    sys.exit(1)
+elif words[:2] == ["capture", "list"] or words[:2] == ["capture", "search"]:
+    stored = scenario / "capture_list.json"
+    if stored.exists():
+        sys.stdout.write(stored.read_text())
+    else:
+        emit({"error": "transcription store unavailable", "error_code": 503})
+        sys.exit(1)
 else:
     print("ok")

@@ -1,0 +1,3 @@
+# The repo lives on a nearly full drive; build artefacts go to the home disk.
+[build]
+target-dir = "/home/jocke/.cache/cargo-target/tuple-ui-v2"
