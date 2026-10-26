@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+"""A stand-in `tuple` executable for tests.
+
+It replays recorded CLI output so the app under test talks to a real
+subprocess over real pipes. Environment:
+
+  FAKE_TUPLE_DIR   directory holding the scenario files:
+                     state_raw.json   -> `tuple state --raw --format json`
+                     follow.jsonl     -> initial lines streamed by `state follow --raw`
+                     events.jsonl     -> appended to by tests; follow tails it live
+                     error            -> if present, every command fails with its text
+  FAKE_TUPLE_LOG   file that receives one line per invocation (the argv)
+"""
+import json
+import os
+import sys
+import time
+from pathlib import Path
+
+scenario = Path(os.environ["FAKE_TUPLE_DIR"])
+log = os.environ.get("FAKE_TUPLE_LOG")
+args = sys.argv[1:]
+
+if log:
+    with open(log, "a") as f:
+        f.write(json.dumps(args) + "\n")
+
+if (scenario / "error").exists():
+    sys.stderr.write((scenario / "error").read_text())
+    sys.exit(1)
+
+as_json = "--format" in args and args[args.index("--format") + 1] == "json"
+words = [a for a in args if not a.startswith("--") and a != "json"]
+
+
+def emit(obj):
+    sys.stdout.write(json.dumps(obj) + "\n")
+    sys.stdout.flush()
+
+
+def follow():
+    initial = scenario / "follow.jsonl"
+    if initial.exists():
+        for line in initial.read_text().splitlines():
+            if line.strip():
+                sys.stdout.write(line + "\n")
+        sys.stdout.flush()
+    events = scenario / "events.jsonl"
+    seen = 0
+    while True:
+        if events.exists():
+            lines = [l for l in events.read_text().splitlines() if l.strip()]
+            for line in lines[seen:]:
+                sys.stdout.write(line + "\n")
+            sys.stdout.flush()
+            seen = len(lines)
+        time.sleep(0.02)
+
+
+if words[:2] == ["state", "follow"]:
+    try:
+        follow()
+    except (BrokenPipeError, KeyboardInterrupt):
+        sys.exit(0)
+elif words[:1] == ["state"]:
+    sys.stdout.write((scenario / "state_raw.json").read_text())
+elif words[:1] == ["version"]:
+    print("v2026_10_23.0")
+elif words[:2] == ["call", "mute"]:
+    print("Muted")
+elif words[:2] == ["call", "unmute"]:
+    print("Unmuted")
+elif words[:2] == ["call", "leave"]:
+    print("Left call")
+elif words[:2] == ["rooms", "join"] or words[:2] == ["call", "join"]:
+    emit({"status": "pending"}) if as_json else print("Joining…")
+elif words[:2] == ["call", "start"]:
+    emit({"status": "pending"}) if as_json else print("Calling…")
+elif words[:1] == ["settings"]:
+    print("overlay | 1 | Show \"overlay\" annotation window when sharing screen (0|1)")
+    print("start-calls-muted | 0 | Start with microphone muted when joining a call (0|1)")
+    print("capture | auto | Screen capture mechanism (auto|x11|portal)")
+    print("guest-mode | annotation | Current mode in screen window (annotation|control)")
+    print("transcription-model |  | File path to whisper ggml model")
+elif words[:2] == ["capture", "list"]:
+    emit({"error": "transcription store unavailable", "error_code": 503})
+    sys.exit(1)
+else:
+    print("ok")
