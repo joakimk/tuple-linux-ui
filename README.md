@@ -57,13 +57,16 @@ Download the latest release tarball and run its installer. It copies
 `tuple-ui` to `~/.local/bin` and adds a desktop entry; no root needed.
 
 ```sh
-curl -fsSL https://github.com/joakimk/tuple-linux-ui/releases/latest/download/tuple-ui-x86_64-linux.tar.gz | tar xz -C /tmp
-/tmp/tuple-ui-x86_64-linux/install.sh
+dir="$(mktemp -d)"
+curl -fsSL https://github.com/joakimk/tuple-linux-ui/releases/latest/download/tuple-ui-x86_64-linux.tar.gz | tar xz -C "$dir"
+"$dir/tuple-ui-x86_64-linux/install.sh"
+rm -rf "$dir"
 tuple-ui
 ```
 
-Uninstall with `/tmp/tuple-ui-x86_64-linux/install.sh --uninstall` (or delete
-the two files it installed).
+Uninstall by deleting the two files it installed, `~/.local/bin/tuple-ui` and
+`~/.local/share/applications/dev.joakimk.TupleUi.desktop` (the tarball's
+`install.sh --uninstall` does the same).
 
 ## Build from source
 

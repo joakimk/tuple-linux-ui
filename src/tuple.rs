@@ -42,20 +42,47 @@ impl CliResult {
         serde_json::from_str(&self.stdout).ok()
     }
 
-    /// Best human-readable error text for a failed command.
+    /// The command line for messages, with secrets (the `auth` sign-in code) redacted.
+    pub fn display_command(&self) -> String {
+        format!("tuple {}", redact_args(&self.args).join(" "))
+    }
+
+    /// Best human-readable error text for a failed command. Never includes secrets.
     pub fn error(&self) -> String {
         if let Some(err) = &self.spawn_error {
-            return format!("Could not start `tuple {}`: {err}", self.args.join(" "));
+            return format!("Could not start `{}`: {err}", self.display_command());
         }
         if let Some(message) = self.json().and_then(|v| v.get("error").and_then(Value::as_str).map(String::from)) {
-            return message;
+            return redact_text(&self.args, message);
         }
         let text = if self.stderr.trim().is_empty() { &self.stdout } else { &self.stderr };
         match text.trim().lines().last() {
-            Some(line) if !line.is_empty() => line.to_string(),
-            _ => format!("`tuple {}` failed ({:?})", self.args.join(" "), self.exit_code),
+            Some(line) if !line.is_empty() => redact_text(&self.args, line.to_string()),
+            _ => format!("`{}` failed ({:?})", self.display_command(), self.exit_code),
         }
     }
+}
+
+/// Arguments that must never appear in UI text or notifications.
+fn secret_args(args: &[String]) -> Vec<&String> {
+    match args.first().map(String::as_str) {
+        Some("auth") => args.iter().skip(1).filter(|a| !a.starts_with("--")).collect(),
+        _ => Vec::new(),
+    }
+}
+
+fn redact_args(args: &[String]) -> Vec<String> {
+    let secrets = secret_args(args);
+    args.iter().map(|a| if secrets.contains(&a) { "••••".to_string() } else { a.clone() }).collect()
+}
+
+fn redact_text(args: &[String], mut text: String) -> String {
+    for secret in secret_args(args) {
+        if !secret.is_empty() {
+            text = text.replace(secret.as_str(), "••••");
+        }
+    }
+    text
 }
 
 /// One event from `tuple state follow --raw`, or a lifecycle notice about the stream itself.
@@ -136,6 +163,18 @@ impl TupleCli {
         };
         let stdout = child.stdout.take().expect("stdout piped");
         let stderr = child.stderr.take().expect("stderr piped");
+        // Drain stderr concurrently so a chatty daemon can never block on a full pipe;
+        // only the last non-empty line is kept for diagnostics.
+        let stderr_task = tokio::spawn(async move {
+            let mut last = String::new();
+            let mut lines = BufReader::new(stderr).lines();
+            while let Ok(Some(line)) = lines.next_line().await {
+                if !line.trim().is_empty() {
+                    last = line.chars().take(500).collect();
+                }
+            }
+            last
+        });
         let mut lines = BufReader::new(stdout).lines();
         let mut had_state = false;
         while let Ok(Some(line)) = lines.next_line().await {
@@ -145,17 +184,12 @@ impl TupleCli {
             let data = event.get("data").cloned().unwrap_or(Value::Null);
             if output.send(FollowEvent::Event { kind: kind.to_string(), data }).await.is_err() {
                 let _ = child.kill().await;
+                stderr_task.abort();
                 return had_state;
             }
         }
-        let mut error = String::new();
-        let mut err_lines = BufReader::new(stderr).lines();
-        while let Ok(Some(line)) = err_lines.next_line().await {
-            if !line.trim().is_empty() {
-                error = line;
-            }
-        }
         let status = child.wait().await.ok();
+        let mut error = stderr_task.await.unwrap_or_default();
         if error.is_empty() {
             error = format!("`tuple state follow` exited ({})", status.map(|s| s.to_string()).unwrap_or_default());
         }
@@ -198,6 +232,31 @@ mod tests {
         let result = missing.run(vec!["version".into()]).await;
         assert!(result.spawn_error.is_some());
         assert!(result.error().contains("Could not start"));
+    }
+
+    #[tokio::test]
+    async fn auth_codes_never_appear_in_error_text() {
+        let missing = TupleCli { executable: "/nonexistent/tuple".into(), env: vec![] };
+        let result = missing.run(vec!["auth".into(), "SECRET-1234".into()]).await;
+        assert!(!result.error().contains("SECRET-1234"), "{}", result.error());
+        assert_eq!(result.display_command(), "tuple auth ••••");
+
+        let fake = FakeTuple::new();
+        fake.fail_with("auth failed for code SECRET-1234");
+        let result = cli(&fake).run(vec!["auth".into(), "SECRET-1234".into()]).await;
+        assert!(!result.ok());
+        assert_eq!(result.error(), "auth failed for code ••••");
+    }
+
+    #[tokio::test]
+    async fn follow_survives_a_flood_of_stderr() {
+        let fake = FakeTuple::new();
+        std::fs::write(fake.dir.join("stderr_flood"), "1048576").unwrap();
+        let events = cli(&fake).follow(&tokio::runtime::Handle::current());
+        match next(&events).await {
+            FollowEvent::Event { kind, .. } => assert_eq!(kind, "state"),
+            other => panic!("unexpected {other:?}"),
+        }
     }
 
     #[tokio::test]

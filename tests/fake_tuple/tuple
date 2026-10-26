@@ -39,6 +39,10 @@ def emit(obj):
 
 
 def follow():
+    flood = scenario / "stderr_flood"
+    if flood.exists():  # write this many bytes of diagnostics before any state
+        sys.stderr.write("x" * int(flood.read_text().strip()) + "\n")
+        sys.stderr.flush()
     initial = scenario / "follow.jsonl"
     if initial.exists():
         for line in initial.read_text().splitlines():

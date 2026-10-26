@@ -78,16 +78,28 @@ impl AvatarLoader {
     }
 }
 
+/// Only HTTPS Gravatar URLs are fetched; the daemon hands us whatever the server sent,
+/// so anything else (private hosts, plain HTTP) is ignored and redirects are not followed.
+pub fn is_allowed_avatar_url(url: &str) -> bool {
+    let Some(rest) = url.strip_prefix("https://") else { return false };
+    let host = rest.split(['/', '?', '#']).next().unwrap_or("");
+    matches!(host, "www.gravatar.com" | "gravatar.com" | "secure.gravatar.com" | "0.gravatar.com" | "1.gravatar.com" | "2.gravatar.com")
+}
+
 /// Fetch (or read from the disk cache) and return PNG/JPEG bytes, or None for blank images.
 fn fetch_bytes(url: &str) -> Option<Vec<u8>> {
+    if !is_allowed_avatar_url(url) {
+        return None;
+    }
     let dir = cache_dir();
     let key = url.bytes().fold(0xcbf29ce484222325u64, |hash, b| (hash ^ b as u64).wrapping_mul(0x100000001b3));
     let path = dir.join(format!("{key:016x}"));
     let bytes = match std::fs::read(&path) {
         Ok(bytes) => bytes,
         Err(_) => {
-            let mut response = ureq::get(url).call().ok()?;
-            let bytes = response.body_mut().read_to_vec().ok()?;
+            let agent: ureq::Agent = ureq::Agent::config_builder().max_redirects(0).build().into();
+            let mut response = agent.get(url).call().ok()?;
+            let bytes = response.body_mut().with_config().limit(2 * 1024 * 1024).read_to_vec().ok()?;
             let _ = std::fs::create_dir_all(&dir);
             let _ = std::fs::write(&path, &bytes);
             bytes
@@ -125,5 +137,16 @@ mod tests {
         opaque.write_to(&mut buffer, image::ImageFormat::Png).unwrap();
         assert!(!is_blank(buffer.get_ref()));
         assert!(is_blank(b"not an image"));
+    }
+
+    #[test]
+    fn only_https_gravatar_urls_are_fetched() {
+        assert!(is_allowed_avatar_url("https://www.gravatar.com/avatar/abc?d=blank&s=200"));
+        assert!(is_allowed_avatar_url("https://secure.gravatar.com/avatar/abc"));
+        assert!(!is_allowed_avatar_url("http://www.gravatar.com/avatar/abc"));
+        assert!(!is_allowed_avatar_url("https://www.gravatar.com.evil.example/avatar/abc"));
+        assert!(!is_allowed_avatar_url("https://169.254.169.254/latest/meta-data"));
+        assert!(!is_allowed_avatar_url(""));
+        assert_eq!(fetch_bytes("http://localhost:1/x"), None);
     }
 }

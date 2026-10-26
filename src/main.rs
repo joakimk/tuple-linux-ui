@@ -166,12 +166,15 @@ fn wire_notifications(main: &Rc<MainWindow>, store: &Store, prefs: &Rc<RefCell<P
     let main = main.clone();
     glib::spawn_future_local(async move {
         while let Ok(action) = actions.recv().await {
+            // A notification may outlive its invite; only act on calls still ringing.
+            let still_ringing = |id: &str| store.state().invites.iter().any(|i| viewmodel::invite_call_id(i) == id);
             match action {
-                notify::NotificationAction::Accept(id) => {
+                notify::NotificationAction::Accept(id) if still_ringing(&id) => {
                     store.accept(&id);
                     main.present();
                 }
-                notify::NotificationAction::Decline(id) => store.leave(&id),
+                notify::NotificationAction::Decline(id) if still_ringing(&id) => store.leave(&id),
+                notify::NotificationAction::Accept(_) | notify::NotificationAction::Decline(_) => {}
                 notify::NotificationAction::CallBack(target) => store.call_person(&target),
             }
         }
