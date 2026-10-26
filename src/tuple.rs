@@ -177,7 +177,17 @@ impl TupleCli {
         });
         let mut lines = BufReader::new(stdout).lines();
         let mut had_state = false;
-        while let Ok(Some(line)) = lines.next_line().await {
+        loop {
+            // Stop (and kill the daemon follower) as soon as nobody listens any more.
+            let line = tokio::select! {
+                line = lines.next_line() => line,
+                _ = output.closed() => {
+                    let _ = child.kill().await;
+                    stderr_task.abort();
+                    return had_state;
+                }
+            };
+            let Ok(Some(line)) = line else { break };
             let Ok(event) = serde_json::from_str::<Value>(&line) else { continue };
             let Some(kind) = event.get("type").and_then(Value::as_str) else { continue };
             had_state = true;

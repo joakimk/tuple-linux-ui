@@ -100,12 +100,14 @@ pub fn render_icon(state: Option<TrayState>, sharing: bool, size: i32) -> Icon {
 }
 
 impl Tray for TupleTray {
+    /// The StatusNotifierItem id. Bars (e.g. the Omarchy shell) key their pin/hide
+    /// lists on it, and "Tuple UI" is what the earlier PyQt app registered as.
     fn id(&self) -> String {
-        "tuple-ui".into()
+        "Tuple UI".into()
     }
 
     fn title(&self) -> String {
-        "Tuple".into()
+        "Tuple UI (unofficial)".into()
     }
 
     fn icon_pixmap(&self) -> Vec<Icon> {

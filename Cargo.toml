@@ -1,6 +1,6 @@
 [package]
 name = "tuple-ui"
-version = "2.0.0"
+version = "0.1.0"
 edition = "2021"
 description = "Linux desktop client for Tuple pair programming, built on the unified tuple CLI"
 license = "MIT"
@@ -14,7 +14,7 @@ gtk = { package = "gtk4", version = "0.11", features = ["v4_18"] }
 adw = { package = "libadwaita", version = "0.9", features = ["v1_7"] }
 glib = "0.22"
 gio = "0.22"
-tokio = { version = "1", features = ["rt-multi-thread", "process", "io-util", "net", "time", "macros", "sync"] }
+tokio = { version = "1", features = ["rt-multi-thread", "process", "io-util", "net", "time", "macros", "sync", "signal"] }
 async-channel = "2"
 futures = "0.3"
 serde = { version = "1", features = ["derive"] }

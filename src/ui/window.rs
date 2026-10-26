@@ -81,7 +81,7 @@ impl MainWindow {
         pages.add_named(&ready, Some("ready"));
 
         let header = adw::HeaderBar::new();
-        header.set_title_widget(Some(&adw::WindowTitle::new("Tuple", "")));
+        header.set_title_widget(Some(&adw::WindowTitle::new("Tuple UI", "unofficial")));
         let account = gtk::MenuButton::new();
         account.set_tooltip_text(Some("Account"));
         account.set_icon_name("avatar-default-symbolic");
@@ -101,7 +101,7 @@ impl MainWindow {
         };
         let window = adw::ApplicationWindow::builder()
             .application(app)
-            .title("Tuple")
+            .title("Tuple UI (unofficial)")
             .default_width(width)
             .default_height(height)
             .width_request(360)
@@ -166,7 +166,7 @@ impl MainWindow {
             self.unavailable.set_error(&state.error);
         }
         self.pages.set_visible_child_name(page);
-        self.window.set_title(Some(if state.in_call() { "Tuple — In call" } else { "Tuple" }));
+        self.window.set_title(Some(if state.in_call() { "Tuple UI (unofficial) — In call" } else { "Tuple UI (unofficial)" }));
         if let Some(user) = &state.user {
             self.account.set_tooltip_text(Some(&user.full_name));
             self.account.set_child(Some(&avatar(user, 24, None, &self.loader)));

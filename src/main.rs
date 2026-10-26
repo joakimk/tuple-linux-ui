@@ -30,7 +30,7 @@ use crate::ui::window::MainWindow;
 pub const APP_ID: &str = "dev.joakimk.TupleUi";
 
 #[derive(Parser, Debug)]
-#[command(name = "tuple-ui", version, about = "Tuple desktop client for Linux")]
+#[command(name = "tuple-ui", version, about = "Tuple UI (unofficial) — a Linux desktop client for Tuple")]
 struct Args {
     /// Start hidden in the tray
     #[arg(long)]
@@ -96,6 +96,8 @@ fn activate(app: &adw::Application, runtime: tokio::runtime::Handle, start_hidde
     wire_tray(app, &main, &store);
     wire_instance_socket(app, &main, &store);
 
+    wire_posix_signals(app, &main, &store);
+
     store.start();
     let show = !start_hidden && !prefs.borrow().start_in_tray && prefs.borrow().show_window_on_start;
     if show {
@@ -149,7 +151,7 @@ fn wire_results(main: &Rc<MainWindow>, results: async_channel::Receiver<store::A
         while let Ok(result) = results.recv().await {
             main.on_result(&result);
             if !result.result.ok() && !main.window.is_visible() {
-                notify::Notifier::notice(&format!("Tuple: {} failed", result.label.replace('_', " ")), &result.result.error());
+                notify::Notifier::notice(&format!("Tuple UI: {} failed", result.label.replace('_', " ")), &result.result.error());
             }
         }
     });
@@ -225,6 +227,45 @@ fn wire_tray(app: &adw::Application, main: &Rc<MainWindow>, store: &Store) {
                     main.open_settings();
                 }
                 TrayCommand::Quit => app.quit(),
+            }
+        }
+    });
+}
+
+/// SIGTERM/SIGINT quit cleanly (so the `tuple state follow` child is killed too);
+/// SIGUSR1 toggles mute and SIGUSR2 shows the window, like the v1 app. The signals
+/// are turned into the same commands the instance socket accepts.
+fn wire_posix_signals(app: &adw::Application, main: &Rc<MainWindow>, store: &Store) {
+    use tokio::signal::unix::{signal, SignalKind};
+    let (sender, commands) = async_channel::bounded::<&'static str>(8);
+    store.runtime().spawn(async move {
+        let (Ok(mut term), Ok(mut int), Ok(mut usr1), Ok(mut usr2)) = (
+            signal(SignalKind::terminate()),
+            signal(SignalKind::interrupt()),
+            signal(SignalKind::user_defined1()),
+            signal(SignalKind::user_defined2()),
+        ) else {
+            return;
+        };
+        loop {
+            let command = tokio::select! {
+                _ = term.recv() => "quit",
+                _ = int.recv() => "quit",
+                _ = usr1.recv() => "toggle-mute",
+                _ = usr2.recv() => "show",
+            };
+            if sender.send(command).await.is_err() {
+                return;
+            }
+        }
+    });
+    let (app, main, store) = (app.clone(), main.clone(), store.clone());
+    glib::spawn_future_local(async move {
+        while let Ok(command) = commands.recv().await {
+            match command {
+                "quit" => app.quit(),
+                "toggle-mute" => store.toggle_mute(),
+                _ => main.present(),
             }
         }
     });

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=Tuple
-Comment=Pair programming calls, rooms and screen sharing
+Name=Tuple UI (unofficial)
+Comment=Unofficial Linux client for Tuple pair programming
 Exec=tuple-ui
 Icon=tuple
 Terminal=false

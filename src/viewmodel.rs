@@ -125,12 +125,12 @@ pub fn tray_state(state: &AppState) -> TrayState {
 
 pub fn tray_tooltip(state: &AppState) -> String {
     match tray_state(state) {
-        TrayState::Unavailable => "Tuple — Unavailable".into(),
-        TrayState::Connecting => "Tuple — Connecting…".into(),
-        TrayState::SignedOut => "Tuple — Signed out".into(),
+        TrayState::Unavailable => "Tuple UI (unofficial) — Unavailable".into(),
+        TrayState::Connecting => "Tuple UI (unofficial) — Connecting…".into(),
+        TrayState::SignedOut => "Tuple UI (unofficial) — Signed out".into(),
         TrayState::Idle => {
             let online = state.contacts.iter().filter(|c| c.favorited && c.status == "online").count();
-            format!("Tuple — Ready · {online} favorites online")
+            format!("Tuple UI (unofficial) — Ready · {online} favorites online")
         }
         TrayState::InCallMuted | TrayState::InCallLive => {
             let call = state.call.as_ref().expect("in call");
@@ -138,7 +138,7 @@ pub fn tray_tooltip(state: &AppState) -> String {
             if call.sharing {
                 bits.push("sharing screen");
             }
-            format!("Tuple — {}", bits.join(" · "))
+            format!("Tuple UI (unofficial) — {}", bits.join(" · "))
         }
     }
 }
@@ -227,12 +227,12 @@ mod tests {
     fn tray_state_and_tooltip_follow_the_call() {
         let idle = AppState::from_raw(&raw_idle());
         assert_eq!(tray_state(&idle), TrayState::Idle);
-        assert_eq!(tray_tooltip(&idle), "Tuple — Ready · 6 favorites online");
+        assert_eq!(tray_tooltip(&idle), "Tuple UI (unofficial) — Ready · 6 favorites online");
         let in_call = in_call_state();
         assert_eq!(tray_state(&in_call), TrayState::InCallMuted);
-        assert_eq!(tray_tooltip(&in_call), "Tuple — In call · muted");
+        assert_eq!(tray_tooltip(&in_call), "Tuple UI (unofficial) — In call · muted");
         assert_eq!(tray_state(&AppState::unavailable("x")), TrayState::Unavailable);
-        assert_eq!(tray_tooltip(&AppState::connecting("")), "Tuple — Connecting…");
+        assert_eq!(tray_tooltip(&AppState::connecting("")), "Tuple UI (unofficial) — Connecting…");
     }
 
     #[test]

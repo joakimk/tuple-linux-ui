@@ -86,7 +86,7 @@ impl Notifier {
         let shown = self.shown.clone();
         std::thread::spawn(move || {
             let handle = Notification::new()
-                .appname("Tuple")
+                .appname("Tuple UI (unofficial)")
                 .summary(&format!("{} is calling you", person.full_name))
                 .body("Tuple call")
                 .icon("tuple")
@@ -116,7 +116,7 @@ impl Notifier {
         let actions = self.actions.clone();
         std::thread::spawn(move || {
             let shown = Notification::new()
-                .appname("Tuple")
+                .appname("Tuple UI (unofficial)")
                 .summary(&format!("Missed call from {}", person.full_name))
                 .icon("tuple")
                 .action("callback", "Call back")
@@ -136,7 +136,7 @@ impl Notifier {
         let title = title.to_string();
         let body = body.to_string();
         std::thread::spawn(move || {
-            let _ = Notification::new().appname("Tuple").summary(&title).body(&body).icon("tuple").timeout(Timeout::Milliseconds(6000)).show();
+            let _ = Notification::new().appname("Tuple UI (unofficial)").summary(&title).body(&body).icon("tuple").timeout(Timeout::Milliseconds(6000)).show();
         });
     }
 }

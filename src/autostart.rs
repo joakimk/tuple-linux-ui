@@ -6,7 +6,7 @@ use crate::prefs::config_dir;
 
 const ENTRY: &str = "[Desktop Entry]\n\
 Type=Application\n\
-Name=Tuple UI\n\
+Name=Tuple UI (unofficial)\n\
 Comment=Tuple pair programming client\n\
 Exec=tuple-ui --tray\n\
 Icon=tuple\n\

@@ -1,7 +1,10 @@
-# Tuple UI
+# Tuple UI (unofficial)
 
-A native Linux desktop client for [Tuple](https://tuple.app) pair programming,
-built in Rust with GTK 4 and libadwaita on top of the unified `tuple` CLI.
+An unofficial, community-made Linux desktop client for
+[Tuple](https://tuple.app) pair programming, built in Rust with GTK 4 and
+libadwaita on top of Tuple's own `tuple` CLI from
+[Tuple for Linux](https://tuple.app/linux/). It is not made or endorsed by
+Tuple; it only drives the official Linux CLI.
 
 Tuple's own Linux client is command-line only. This app gives it the same
 popover the macOS and Windows apps have, translated to GNOME conventions: see
@@ -14,6 +17,13 @@ popover the macOS and Windows apps have, translated to GNOME conventions: see
 | Links | Settings | Incoming call |
 | --- | --- | --- |
 | ![Links tab](docs/screenshots/links.png) | ![Settings dialog](docs/screenshots/settings.png) | ![Incoming call window](docs/screenshots/incoming-call.png) |
+
+The tray icon (here pinned in the Omarchy bar, the purple dot) turns green in
+a call with the mic live, red when muted, and grey while disconnected; its menu
+offers Show, Mute, Share screen, Leave call, one-click calls to online
+favorites, your rooms, Settings and Quit:
+
+![Tray icon in the bar](docs/screenshots/tray.png)
 
 (Screenshots show the anonymized test data the suite uses, not real contacts.)
 
@@ -86,12 +96,37 @@ make release    # tag, push and publish a GitHub release (maintainers)
 `tuple-ui --tray` starts hidden in the tray; the Settings dialog can add an
 autostart entry that does this at login.
 
-Hyprland example for a global mute key:
+Hyprland (plain `.conf`) example for global keys:
 
 ```
 bind = SUPER SHIFT, M, exec, tuple-ui --toggle-mute
 bind = SUPER, T, exec, tuple-ui --toggle-window
 ```
+
+## Omarchy notes
+
+Tuple UI is developed on [Omarchy](https://omarchy.org) (Hyprland + the
+Omarchy shell bar). Everything works out of the box, with two optional tweaks:
+
+- **Tray icon**: the Omarchy bar keeps unpinned tray icons in a drawer. Pin
+  "Tuple UI" from the drawer's menu, or add `"Tuple UI"` to the `pinned` list of
+  the `omarchy.tray` entry in `~/.config/omarchy/shell.json`.
+- **Floating popover**: Hyprland tiles the window by default. To get the
+  popover feel of the Mac/Windows apps, add to `~/.config/hypr/hyprland.lua`:
+
+  ```lua
+  o.window("dev.joakimk.TupleUi", { float = true })
+  o.window("dev.joakimk.TupleUi", { center = true })
+  o.window("dev.joakimk.TupleUi", { size = { 420, 640 } })
+  ```
+
+- **Hotkeys**: in `~/.config/hypr/bindings.lua`, for example
+  `o.bind("SUPER + SHIFT + M", "Tuple mute", "tuple-ui --toggle-mute")` and
+  `o.bind("SUPER + T", "Tuple", "tuple-ui --toggle-window")`.
+
+Incoming-call and missed-call notifications use the regular desktop
+notification service, so the Omarchy shell shows them with their Accept /
+Decline and Call back buttons.
 
 ## Development
 
