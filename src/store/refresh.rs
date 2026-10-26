@@ -30,6 +30,9 @@ impl Store {
                 if !store.needs_contacts() {
                     break;
                 }
+                if std::env::var_os("TUPLE_UI_DEBUG").is_some() {
+                    eprintln!("refresh: signed in without contacts, polling tuple state (attempt {})", attempt + 1);
+                }
                 let cli = store.cli();
                 let args = ["state", "--raw", "--format", "json"].iter().map(|a| a.to_string()).collect();
                 let result = store.runtime.spawn(async move { cli.run(args).await }).await;
