@@ -91,6 +91,9 @@ impl PeopleView {
         *self.rendered.borrow_mut() = Some(key);
         clear(&self.list);
         let sections = group_contacts(&state, &self.search.text());
+        if std::env::var_os("TUPLE_UI_DEBUG").is_some() {
+            eprintln!("people: phase={:?} contacts={} sections={}", state.phase(), state.contacts.len(), sections.len());
+        }
         if sections.is_empty() {
             let text = if self.search.text().is_empty() { "No contacts yet. Invite a teammate." } else { "No one matches your search." };
             let label = gtk::Label::new(Some(text));

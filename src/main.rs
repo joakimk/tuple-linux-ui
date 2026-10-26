@@ -101,6 +101,12 @@ fn activate(app: &adw::Application, runtime: tokio::runtime::Handle, start_hidde
     if show {
         main.present();
     }
+    // Development aid: TUPLE_UI_OPEN=settings|shortcuts opens that dialog right away.
+    match std::env::var("TUPLE_UI_OPEN").as_deref() {
+        Ok("settings") => main.open_settings(),
+        Ok("shortcuts") => main.open_shortcuts(),
+        _ => {}
+    }
 }
 
 fn wire_actions(app: &adw::Application, main: &Rc<MainWindow>, store: &Store) {

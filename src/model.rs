@@ -39,17 +39,6 @@ impl Person {
             avatar_url: s("avatar_url"),
         }
     }
-
-    pub fn initials(&self) -> String {
-        let initials: String = self
-            .full_name
-            .split_whitespace()
-            .take(2)
-            .filter_map(|part| part.chars().next())
-            .collect::<String>()
-            .to_uppercase();
-        if initials.is_empty() { "?".into() } else { initials }
-    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -300,10 +289,6 @@ impl AppState {
         self.phase.0
     }
 
-    pub fn connected(&self) -> bool {
-        self.websocket_state == "connected"
-    }
-
     pub fn in_call(&self) -> bool {
         self.call.is_some()
     }
@@ -364,7 +349,7 @@ mod tests {
         assert_eq!(state.user.as_ref().unwrap().full_name, "Jo Example");
         assert_eq!(state.team_name, "Acme");
         assert!(state.call.is_none());
-        assert!(state.connected());
+        assert_eq!(state.websocket_state, "connected");
         assert_eq!(state.contacts.len(), 24);
         assert_eq!(state.personal_room.as_ref().unwrap().slug, "r24ab2");
         assert_eq!(state.team_rooms.len(), 10);
@@ -457,9 +442,7 @@ mod tests {
     }
 
     #[test]
-    fn initials_and_participant_details() {
-        let person = Person { full_name: "Ada Lovelace".into(), ..Person::default() };
-        assert_eq!(person.initials(), "AL");
+    fn participant_details() {
         let p = Participant::from_raw(&serde_json::json!({
             "id": 2, "email": "ada@example.com", "full_name": "Ada Lovelace",
             "audio_enabled": false, "share_state": "screen"
