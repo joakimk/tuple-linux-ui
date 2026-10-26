@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Tuple
+Comment=Pair programming calls, rooms and screen sharing
+Exec=tuple-ui
+Icon=tuple
+Terminal=false
+Categories=Network;Development;
+Keywords=pairing;call;screen;share;
+StartupNotify=true
+StartupWMClass=dev.joakimk.TupleUi
+Actions=toggle-mute;
+
+[Desktop Action toggle-mute]
+Name=Mute / unmute
+Exec=tuple-ui --toggle-mute

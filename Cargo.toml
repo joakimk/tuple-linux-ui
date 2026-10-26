@@ -10,15 +10,18 @@ name = "tuple-ui"
 path = "src/main.rs"
 
 [dependencies]
-iced = { version = "0.14", features = ["tokio", "image", "canvas", "advanced"] }
-tokio = { version = "1", features = ["full"] }
+gtk = { package = "gtk4", version = "0.11", features = ["v4_18"] }
+adw = { package = "libadwaita", version = "0.9", features = ["v1_7"] }
+glib = "0.22"
+gio = "0.22"
+tokio = { version = "1", features = ["rt-multi-thread", "process", "io-util", "net", "time", "macros", "sync"] }
+async-channel = "2"
+futures = "0.3"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-chrono = { version = "0.4", features = ["serde"] }
+chrono = "0.4"
 clap = { version = "4", features = ["derive"] }
 anyhow = "1"
-directories = "6"
-futures = "0.3"
 ksni = "0.3"
 notify-rust = "4"
 ureq = "3"
