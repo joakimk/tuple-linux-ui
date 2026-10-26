@@ -1,8 +1,13 @@
 //! Shared helpers for tests: fixture loading and a scenario directory for the fake `tuple`.
 
 use std::path::{Path, PathBuf};
+use std::time::Duration;
 
+use async_channel::Receiver;
 use serde_json::Value;
+
+use crate::store::{ActionResult, Store};
+use crate::tuple::TupleCli;
 
 pub fn fixtures_dir() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures")
@@ -59,6 +64,12 @@ impl FakeTuple {
         ]
     }
 
+    /// Replace the initial `state` line the fake follow stream starts with.
+    pub fn set_follow_state(&self, state: &Value) {
+        let line = serde_json::json!({"type": "state", "data": state}).to_string();
+        std::fs::write(self.dir.join("follow.jsonl"), line + "\n").unwrap();
+    }
+
     pub fn emit(&self, event_type: &str, data: Value) {
         use std::io::Write;
         let mut file = std::fs::OpenOptions::new()
@@ -87,6 +98,31 @@ impl Drop for FakeTuple {
     fn drop(&mut self) {
         let _ = std::fs::remove_dir_all(&self.dir);
     }
+}
+
+/// A store wired to the fake `tuple`, for tests that drive it through the GTK main context.
+pub fn fake_store(fake: &FakeTuple, runtime: &tokio::runtime::Runtime) -> (Store, Receiver<ActionResult>) {
+    let cli = TupleCli { executable: fake_tuple_path().to_string_lossy().into_owned(), env: fake.env() };
+    Store::new(cli, runtime.handle().clone())
+}
+
+/// Iterate the main context until `until` holds (true) or 5 s pass (false).
+pub fn pump(context: &glib::MainContext, until: impl Fn() -> bool) -> bool {
+    let deadline = std::time::Instant::now() + Duration::from_secs(5);
+    while std::time::Instant::now() < deadline {
+        context.iteration(false);
+        if until() {
+            return true;
+        }
+        std::thread::sleep(Duration::from_millis(10));
+    }
+    false
+}
+
+/// Run `test` with its own thread-default main context so `glib::spawn_future_local` targets it.
+pub fn with_context(test: impl FnOnce(&glib::MainContext)) {
+    let context = glib::MainContext::new();
+    context.with_thread_default(|| test(&context)).unwrap();
 }
 
 fn rand_suffix() -> u128 {

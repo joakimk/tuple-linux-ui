@@ -12,6 +12,8 @@ use async_channel::{Receiver, Sender};
 use crate::model::{AppState, Phase};
 use crate::tuple::{CliResult, FollowEvent, TupleCli};
 
+mod refresh;
+
 pub type Listener = Box<dyn Fn(&AppState)>;
 
 /// Outcome of one dispatched action: the label passed to `dispatch` and the CLI result.
@@ -32,12 +34,14 @@ struct Inner {
     state: AppState,
     listeners: Vec<Listener>,
     results: Sender<ActionResult>,
+    /// A boot-time contact poll (see `refresh`) is in flight.
+    refreshing: bool,
 }
 
 impl Store {
     pub fn new(cli: TupleCli, runtime: tokio::runtime::Handle) -> (Store, Receiver<ActionResult>) {
         let (results, receiver) = async_channel::unbounded();
-        let inner = Inner { cli, state: AppState::default(), listeners: Vec::new(), results };
+        let inner = Inner { cli, state: AppState::default(), listeners: Vec::new(), results, refreshing: false };
         (Store { inner: Rc::new(RefCell::new(inner)), runtime }, receiver)
     }
 
@@ -92,6 +96,8 @@ impl Store {
         for listener in &inner.listeners {
             listener(&inner.state);
         }
+        drop(inner);
+        self.maybe_refresh_contacts();
     }
 
     /// Run `tuple <args>` asynchronously; the result arrives on the `results` channel.
@@ -234,38 +240,15 @@ impl Store {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::test_support::{fake_tuple_path, FakeTuple};
+    use crate::test_support::{fake_store, pump, with_context, FakeTuple};
     use std::time::Duration;
-
-    fn store_for(fake: &FakeTuple, runtime: &tokio::runtime::Runtime) -> (Store, Receiver<ActionResult>) {
-        let cli = TupleCli { executable: fake_tuple_path().to_string_lossy().into_owned(), env: fake.env() };
-        Store::new(cli, runtime.handle().clone())
-    }
-
-    fn pump(context: &glib::MainContext, until: impl Fn() -> bool) -> bool {
-        let deadline = std::time::Instant::now() + Duration::from_secs(5);
-        while std::time::Instant::now() < deadline {
-            context.iteration(false);
-            if until() {
-                return true;
-            }
-            std::thread::sleep(Duration::from_millis(10));
-        }
-        false
-    }
-
-    /// Each test gets its own main context so `glib::spawn_future_local` targets it.
-    fn with_context(test: impl FnOnce(&glib::MainContext)) {
-        let context = glib::MainContext::new();
-        context.with_thread_default(|| test(&context)).unwrap();
-    }
 
     #[test]
     fn follows_state_and_notifies_listeners() {
         with_context(|context| {
             let runtime = tokio::runtime::Runtime::new().unwrap();
             let fake = FakeTuple::new();
-            let (store, _results) = store_for(&fake, &runtime);
+            let (store, _results) = fake_store(&fake, &runtime);
             let seen = Rc::new(RefCell::new(Vec::new()));
             let sink = seen.clone();
             store.subscribe(move |state| sink.borrow_mut().push(state.phase()));
@@ -286,7 +269,7 @@ mod tests {
         with_context(|context| {
             let runtime = tokio::runtime::Runtime::new().unwrap();
             let fake = FakeTuple::new();
-            let (store, results) = store_for(&fake, &runtime);
+            let (store, results) = fake_store(&fake, &runtime);
             store.call_person("ada@example.com");
             let outcome = runtime.block_on(async { tokio::time::timeout(Duration::from_secs(5), results.recv()).await.unwrap().unwrap() });
             assert_eq!(outcome.label, "call");
