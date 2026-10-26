@@ -41,7 +41,9 @@ favorites, your rooms, Settings and Quit:
 - **Incoming calls**: a small window plus a desktop notification with Accept /
   Decline.
 - **Tray icon** (StatusNotifier): state-coloured dot, quick actions, click to
-  show or hide the window. Closing the window hides it to the tray.
+  show or hide the window. On Hyprland the window opens as a popup right under
+  the tray icon (Settings → "Open under the tray icon"). Closing the window
+  hides it to the tray.
 - **Settings**: Tuple daemon settings (`tuple settings`) and UI preferences,
   launch at login, notifications.
 - **Keyboard shortcuts**: Ctrl+1–4 tabs, Ctrl+F search, Ctrl+M mute,
@@ -111,14 +113,12 @@ Omarchy shell bar). Everything works out of the box, with two optional tweaks:
 - **Tray icon**: the Omarchy bar keeps unpinned tray icons in a drawer. Pin
   "Tuple UI" from the drawer's menu, or add `"Tuple UI"` to the `pinned` list of
   the `omarchy.tray` entry in `~/.config/omarchy/shell.json`.
-- **Floating popover**: Hyprland tiles the window by default. To get the
-  popover feel of the Mac/Windows apps, add to `~/.config/hypr/hyprland.lua`:
-
-  ```lua
-  o.window("dev.joakimk.TupleUi", { float = true })
-  o.window("dev.joakimk.TupleUi", { center = true })
-  o.window("dev.joakimk.TupleUi", { size = { 420, 640 } })
-  ```
+- **Popup under the tray icon**: a tray click opens the window floating just
+  below the bar, centred on the icon; another click (or closing it) hides it
+  again. The app does this itself through `hyprctl` (a one-shot window rule, so the
+  window never appears tiled first). Windows opened any other way (launcher,
+  `--show`, hotkeys) keep Hyprland's normal tiling; add your own window rules
+  in `~/.config/hypr/hyprland.lua` if you want those floating too.
 
 - **Hotkeys**: in `~/.config/hypr/bindings.lua`, for example
   `o.bind("SUPER + SHIFT + M", "Tuple mute", "tuple-ui --toggle-mute")` and
@@ -127,6 +127,11 @@ Omarchy shell bar). Everything works out of the box, with two optional tweaks:
 Incoming-call and missed-call notifications use the regular desktop
 notification service, so the Omarchy shell shows them with their Accept /
 Decline and Call back buttons.
+The app starts GTK with `GDK_DISABLE=vulkan` unless you set `GDK_DISABLE`
+yourself: GTK's Vulkan probe on NVIDIA opens an X11 display, and when XWayland
+is not running (Hyprland starts it lazily) that connect blocks forever, which
+froze the app on the first tray click. GL rendering is all it needs.
+
 
 ## Development
 

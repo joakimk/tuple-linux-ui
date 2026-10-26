@@ -2,6 +2,7 @@
 
 mod autostart;
 mod avatars;
+mod hyprland;
 mod instance;
 mod model;
 mod notify;
@@ -65,6 +66,15 @@ fn main() -> glib::ExitCode {
             return glib::ExitCode::FAILURE;
         }
         // --show / --toggle-window without a running instance: just launch.
+    }
+
+    // GTK probes Vulkan when the first window is realized. On NVIDIA that probe
+    // opens an X11 display, and when XWayland is not running (Hyprland starts
+    // it lazily) the connect blocks the main thread forever: a tray click then
+    // freezes the app. The GL renderer is all this app needs, so skip the probe
+    // unless the user chose otherwise.
+    if std::env::var_os("GDK_DISABLE").is_none() {
+        std::env::set_var("GDK_DISABLE", "vulkan");
     }
 
     let runtime = tokio::runtime::Runtime::new().expect("tokio runtime");
@@ -216,7 +226,7 @@ fn wire_tray(app: &adw::Application, main: &Rc<MainWindow>, store: &Store) {
     glib::spawn_future_local(async move {
         while let Ok(command) = receiver.recv().await {
             match command {
-                TrayCommand::ToggleWindow => main.toggle(),
+                TrayCommand::ToggleWindow => main.toggle_from_tray(store.runtime()),
                 TrayCommand::ToggleMute => store.toggle_mute(),
                 TrayCommand::ToggleShare => store.toggle_share(),
                 TrayCommand::Leave => store.leave("current"),
@@ -278,6 +288,9 @@ fn wire_instance_socket(app: &adw::Application, main: &Rc<MainWindow>, store: &S
     let app = app.clone();
     glib::spawn_future_local(async move {
         while let Ok(command) = commands.recv().await {
+            if std::env::var_os("TUPLE_UI_DEBUG").is_some() {
+                eprintln!("instance: received {command}");
+            }
             match command.as_str() {
                 "show" => main.present(),
                 "toggle-window" => main.toggle(),

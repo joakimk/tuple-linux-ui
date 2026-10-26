@@ -52,9 +52,11 @@ pub fn open(parent: &impl IsA<gtk::Widget>, store: &Store, prefs: &Rc<RefCell<Pr
     window_group.set_title("Window");
     let show_on_start = switch_row("Show the window when Tuple UI starts", prefs.borrow().show_window_on_start);
     let start_in_tray = switch_row("Start hidden in the tray", prefs.borrow().start_in_tray);
+    let popup_from_tray = switch_row("Open under the tray icon (Hyprland)", prefs.borrow().popup_from_tray);
     let launch = switch_row("Launch at login", autostart::is_enabled());
     window_group.add(&show_on_start);
     window_group.add(&start_in_tray);
+    window_group.add(&popup_from_tray);
     window_group.add(&launch);
     let notify_group = adw::PreferencesGroup::new();
     notify_group.set_title("Notifications");
@@ -73,6 +75,10 @@ pub fn open(parent: &impl IsA<gtk::Widget>, store: &Store, prefs: &Rc<RefCell<Pr
     {
         let prefs = prefs.clone();
         start_in_tray.connect_active_notify(move |row| save(&prefs, |p| p.start_in_tray = row.is_active()));
+    }
+    {
+        let prefs = prefs.clone();
+        popup_from_tray.connect_active_notify(move |row| save(&prefs, |p| p.popup_from_tray = row.is_active()));
     }
     {
         let prefs = prefs.clone();

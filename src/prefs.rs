@@ -11,6 +11,8 @@ use serde::{Deserialize, Serialize};
 pub struct Prefs {
     pub show_window_on_start: bool,
     pub start_in_tray: bool,
+    /// Open the window as a popup under the tray icon (Hyprland only).
+    pub popup_from_tray: bool,
     pub notify_incoming_calls: bool,
     pub notify_missed_calls: bool,
     pub last_tab: String,
@@ -25,6 +27,7 @@ impl Default for Prefs {
         Prefs {
             show_window_on_start: true,
             start_in_tray: false,
+            popup_from_tray: true,
             notify_incoming_calls: true,
             notify_missed_calls: true,
             last_tab: "people".into(),
@@ -85,6 +88,7 @@ mod tests {
         assert!(prefs.show_window_on_start);
         assert!(prefs.notify_incoming_calls);
         assert!(!prefs.start_in_tray);
+        assert!(prefs.popup_from_tray);
         assert_eq!(prefs.last_tab, "people");
     }
 

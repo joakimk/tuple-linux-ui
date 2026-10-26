@@ -6,6 +6,8 @@ use std::rc::Rc;
 
 use adw::prelude::*;
 
+mod popup;
+
 use super::call_bar::CallBar;
 use super::history::HistoryView;
 use super::incoming::IncomingCall;
@@ -18,6 +20,9 @@ use crate::avatars::AvatarLoader;
 use crate::model::{AppState, Phase};
 use crate::prefs::Prefs;
 use crate::store::{ActionResult, Store};
+
+/// Window title prefix (the in-call variant appends to it); Hyprland matches on it.
+pub const TITLE: &str = "Tuple UI (unofficial)";
 
 pub const TABS: [(&str, &str, &str); 4] = [
     ("people", "People", "system-users-symbolic"),
@@ -101,7 +106,7 @@ impl MainWindow {
         };
         let window = adw::ApplicationWindow::builder()
             .application(app)
-            .title("Tuple UI (unofficial)")
+            .title(TITLE)
             .default_width(width)
             .default_height(height)
             .width_request(360)
@@ -229,6 +234,9 @@ impl MainWindow {
 
     pub fn present(&self) {
         self.window.present();
+        if std::env::var_os("TUPLE_UI_DEBUG").is_some() {
+            eprintln!("window: presented (visible={}, mapped={})", self.window.is_visible(), self.window.is_mapped());
+        }
     }
 
     pub fn toggle(&self) {
