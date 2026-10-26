@@ -1,6 +1,6 @@
 [package]
 name = "tuple-ui"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Linux desktop client for Tuple pair programming, built on the unified tuple CLI"
 license = "MIT"
