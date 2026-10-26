@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+os.environ.setdefault("TUPLE_UI_OFFLINE", "1")  # never fetch avatars in tests
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
