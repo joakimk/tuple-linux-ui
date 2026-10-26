@@ -82,10 +82,13 @@ class Room:
     members: tuple[Person, ...] = ()
     auto_join_behavior: str = ""
     created_at: str = ""
+    owner: Person | None = None
 
     @classmethod
     def from_raw(cls, raw: dict[str, Any], kind: str) -> "Room":
+        owner_raw = raw.get("user") or raw.get("creator")
         return cls(
+            owner=Person.from_raw(owner_raw) if owner_raw else None,
             id=str(raw.get("id") or ""),
             slug=raw.get("slug") or "",
             name=raw.get("name") or "",
